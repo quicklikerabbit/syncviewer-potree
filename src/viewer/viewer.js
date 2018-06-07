@@ -3,7 +3,7 @@ Potree.Viewer = class PotreeViewer extends THREE.EventDispatcher{
 	
 	constructor(domElement, args = {}){
 		super();
-
+		
 		this.renderArea = domElement;
 		this.guiLoaded = false;	
 		this.guiLoadTasks = [];
@@ -1625,4 +1625,61 @@ Potree.Viewer = class PotreeViewer extends THREE.EventDispatcher{
 
 		return message;
 	}
+
+	// Mobiloitte
+	addAnnotationFunc(){
+		let measuringTool = new Potree.MeasuringTool(viewer);
+		let dummyMeasure = measuringTool.startInsertion({
+			showDistances: false,
+			showAngles: false,
+			showCoordinates: false,
+			showArea: false,
+			closed: true,
+			maxMarkers: 1,
+			name: 'Point'
+		});
+
+		dummyMeasure.addEventListener('marker_dropped', (markerDroppedEvent) => {
+			const annotationFormButton = document.getElementById('annotationFormSubmit');
+			const annotationCancelButton = document.getElementById('annotationCancel');
+			const annotationTitle = document.getElementById('annotationTitle');
+			const annotationDescription = document.getElementById('annotationDescription');
+			const annotationForm = annotationTitle.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode;
+			annotationForm.style.visibility = 'visible';
+			annotationTitle.value = '';
+			annotationDescription.value = '';
+			
+			function handleFormSubmit () {
+				if (!annotationTitle.value) {
+					return;
+				}
+				
+				window.viewer.scene.addAnnotation(
+					markerDroppedEvent.measurement.points[0].position, 
+					{
+						title: annotationTitle.value,
+						description: annotationDescription.value || null,
+						cameraPosition: [window.viewer.scene.view.position.x, window.viewer.scene.view.position.y, window.viewer.scene.view.position.z],
+						cameraTarget: [window.viewer.scene.view.getPivot().x, window.viewer.scene.view.getPivot().y, window.viewer.scene.view.getPivot().z]
+					}    
+				);
+				window.viewer.scene.removeMeasurement(dummyMeasure)
+				annotationFormButton.removeEventListener('click', handleFormSubmit);
+				annotationCancelButton.removeEventListener('click', handleCancelButton);
+				annotationForm.style.visibility = 'hidden'
+			};
+
+			function handleCancelButton () {
+				window.viewer.scene.removeMeasurement(dummyMeasure)
+				annotationForm.style.visibility = 'hidden'
+				annotationFormButton.removeEventListener('click', handleFormSubmit);
+				annotationCancelButton.removeEventListener('click', handleCancelButton);
+			}
+
+			annotationFormButton.addEventListener('click', handleFormSubmit);
+			annotationCancelButton.addEventListener('click', handleCancelButton);
+			
+		});
+	}
+	
 };

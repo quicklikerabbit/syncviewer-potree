@@ -192,7 +192,7 @@ function memcpy (src, srcOffset, dst, dstOffset, length) {
 	src.subarray(srcOffset, length && srcOffset + length) :
 	src.slice(srcOffset, length && srcOffset + length) : src
 
-	if (dst.set) {
+	if (dst.set) {console.log('if');
 		dst.set(src, dstOffset)
 	} else {
 		for (i=0; i<src.length; i++) {

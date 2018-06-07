@@ -947,7 +947,10 @@ initSidebar = (viewer) => {
 			viewer.setFreeze($('#set_freeze').prop("checked"));
 		});
 		
-
+		// Mobiloitte
+		$('#add_annot').click(function(){
+			viewer.addAnnotationFunc();
+		});
 		
 	};
 
