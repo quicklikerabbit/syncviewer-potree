@@ -1628,6 +1628,8 @@ Potree.Viewer = class PotreeViewer extends THREE.EventDispatcher{
 
 	// Mobiloitte
 	addAnnotationFunc(){
+		// console.log(viewer.scene.getAnnotations().children);
+
 		let measuringTool = new Potree.MeasuringTool(viewer);
 		let dummyMeasure = measuringTool.startInsertion({
 			showDistances: false,
@@ -1639,45 +1641,118 @@ Potree.Viewer = class PotreeViewer extends THREE.EventDispatcher{
 			name: 'Point'
 		});
 
+		// Adding marker dropped listener
 		dummyMeasure.addEventListener('marker_dropped', (markerDroppedEvent) => {
 			const annotationFormButton = document.getElementById('annotationFormSubmit');
 			const annotationCancelButton = document.getElementById('annotationCancel');
 			const annotationTitle = document.getElementById('annotationTitle');
 			const annotationDescription = document.getElementById('annotationDescription');
 			const annotationForm = annotationTitle.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode;
+			document.getElementById('titleErr').innerHTML="";
+			document.getElementById('descErr').innerHTML="";
 			annotationForm.style.visibility = 'visible';
 			annotationTitle.value = '';
 			annotationDescription.value = '';
 			
+			// Handle popup save button
 			function handleFormSubmit () {
+				// Validating title field
 				if (!annotationTitle.value) {
+					document.getElementById('titleErr').innerHTML="*Title field is required";
 					return;
-				}
+				} else document.getElementById('titleErr').innerHTML="";
+
+				// Validating description field
+				if (!annotationDescription.value) {
+					document.getElementById('descErr').innerHTML="*Description field is required";
+					return;
+				} else document.getElementById('descErr').innerHTML="";
+
+				let elTitle = $(`
+					<span>
+						`+annotationTitle.value+`
+						<img src="${Potree.resourcePath}/icons/edit.png" 
+							name="edit_annotation"
+							class="annotation-action-icon icon-size" 
+							style="filter: invert(1);" />
+						<img src="${Potree.resourcePath}/icons/delete.png" 
+							name="delete_annotation"
+							class="annotation-action-icon icon-size" 
+							style="filter: invert(1);" id="`+makeid()+`" />
+					</span>
+				`);
+				elTitle.find("img[name=edit_annotation]").click( (event) => {
+					event.stopPropagation();
+				});
+				elTitle.find("img[name=delete_annotation]").click( (event) => {
+					event.stopPropagation();
+					let annotations = viewer.scene.getAnnotations();
+					annotations.children.forEach((anno, index) => {
+						var myDiv = document.createElement('div');
+						myDiv.id = 'myDiv'+index;
+						document.body.appendChild(myDiv);
+						document.getElementById('myDiv'+index).innerHTML = anno.domElement[0].innerHTML;
+						if(document.querySelectorAll('#myDiv'+index+' div span span img')[1]){
+							if(document.querySelectorAll('#myDiv'+index+' div span span img')[1].getAttribute("id") == event.target.id){
+								annotations.remove(anno);
+								anno.dispose();
+								document.body.removeChild(document.getElementById("myDiv"+index));
+							}
+						}
+					});
+				});
+				elTitle.toString = () => annotationTitle.value;
 				
 				window.viewer.scene.addAnnotation(
 					markerDroppedEvent.measurement.points[0].position, 
 					{
-						title: annotationTitle.value,
+						title: elTitle,
 						description: annotationDescription.value || null,
 						cameraPosition: [window.viewer.scene.view.position.x, window.viewer.scene.view.position.y, window.viewer.scene.view.position.z],
 						cameraTarget: [window.viewer.scene.view.getPivot().x, window.viewer.scene.view.getPivot().y, window.viewer.scene.view.getPivot().z]
 					}    
 				);
+				
 				window.viewer.scene.removeMeasurement(dummyMeasure)
 				annotationFormButton.removeEventListener('click', handleFormSubmit);
 				annotationCancelButton.removeEventListener('click', handleCancelButton);
-				annotationForm.style.visibility = 'hidden'
+				annotationForm.style.visibility = 'hidden';
+				$('#annotationTitle,#annotationDescription').unbind('keypress');
 			};
 
+			// Handle popup cancel button
 			function handleCancelButton () {
 				window.viewer.scene.removeMeasurement(dummyMeasure)
-				annotationForm.style.visibility = 'hidden'
+				annotationForm.style.visibility = 'hidden';
+				$('#annotationTitle,#annotationDescription').unbind('keypress');
 				annotationFormButton.removeEventListener('click', handleFormSubmit);
 				annotationCancelButton.removeEventListener('click', handleCancelButton);
 			}
 
+			// Generating random number
+			function makeid() {
+				var text = "";
+				var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+				for (var i = 0; i < 5; i++)
+					text += possible.charAt(Math.floor(Math.random() * possible.length));
+				return text;
+			}
+
 			annotationFormButton.addEventListener('click', handleFormSubmit);
 			annotationCancelButton.addEventListener('click', handleCancelButton);
+
+			$(function() {
+				$("#annotation-form").submit(function() { 
+					return false; 
+				});
+
+				$('#annotationTitle,#annotationDescription').bind('keypress', function(e) {
+					if ((e.keyCode || e.which) == 13) {
+						handleFormSubmit();
+						return false;
+					}
+				});
+			});
 			
 		});
 	}

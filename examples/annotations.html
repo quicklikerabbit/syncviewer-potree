@@ -218,10 +218,6 @@
 				}]
 			});
 		});
-
-		
-		
-		
 		
 	</script>
 	
@@ -229,21 +225,27 @@
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-body">
-					<form class="modal-form">
+					<form class="modal-form" id="annotation-form" autocomplete="off">
 						<div class="form-group">
 							<label class="control-label">
 								Title
 							</label>
 							<input type="text" class="form-control" placeholder="Annotation Title" id="annotationTitle">
+							<span class="form-err" id="titleErr"></span>
 						</div>
+						
 						<div class="form-group">
 							<label class="control-label">
 								Content
 							</label>
 							<textarea class="form-control" placeholder="Add the content of your annotation here. Click 'save' to store the annotation and the viewport you have now" id="annotationDescription" row="8"
 							></textarea>
+							<span class="form-err" id="descErr"></span>
 						</div>
-						<div class="form-group text-center">
+						<div class="checkbox">
+							<label class="checkb"><input type="checkbox" name="viewport" id="viewportChk"> Save the viewport with the annotation</label>
+						</div>
+						<div class="text-center mt20">
 							<button type="button" class="btn btn-submit" id="annotationFormSubmit">Save</button>
 							<button type="button" class="btn btn-submit" id="annotationCancel">Cancel</button>
 						</div>
@@ -354,7 +356,34 @@
 	.modal-form .btn-submit{color:#fff;min-width: 80px;}
 	.text-center{text-align:center;}
 	.modal-form textarea{min-height: 100px;resize: none;}
+	.form-err{
+		color:red; 
+		font-size: 12px;
+	}
 
+	.checkbox, .radio {
+		margin-bottom: 10px;
+	}
+
+	.checkbox label, .radio label {
+		color: #555;
+    	font-size: 13px;
+	}
+
+	button.btn-add-annot{
+		background-color: var(--bg-color-2);
+		border: var(--bg-color-2);
+		color: #fff;
+		padding: 6px 10px;
+		border-radius: 4px;
+	}
+	.mt20{margin-top:20px!important;}
+	.checkb input{vertical-align:bottom;}
+	button:focus{outline: none;}
+	.annotation-action-icon.icon-size{    
+		width: 18px;
+    	height: 18px;
+	}
 
 	</style>
 	
