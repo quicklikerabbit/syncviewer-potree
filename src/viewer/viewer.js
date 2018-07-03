@@ -1629,6 +1629,12 @@ Potree.Viewer = class PotreeViewer extends THREE.EventDispatcher{
 	// Mobiloitte
 	addAnnotationFunc(){
 		// console.log(viewer.scene.getAnnotations().children);
+		// let annotations = viewer.scene.getAnnotations();
+		// annotations.children.forEach(anno => {
+		// 	console.log(anno.domElement[0].innerText);
+		// 	annotations.remove(anno);
+		// 	anno.dispose();
+		// });
 
 		let measuringTool = new Potree.MeasuringTool(viewer);
 		let dummyMeasure = measuringTool.startInsertion({
@@ -1703,15 +1709,25 @@ Potree.Viewer = class PotreeViewer extends THREE.EventDispatcher{
 				});
 				elTitle.toString = () => annotationTitle.value;
 				
-				window.viewer.scene.addAnnotation(
-					markerDroppedEvent.measurement.points[0].position, 
-					{
-						title: elTitle,
-						description: annotationDescription.value || null,
-						cameraPosition: [window.viewer.scene.view.position.x, window.viewer.scene.view.position.y, window.viewer.scene.view.position.z],
-						cameraTarget: [window.viewer.scene.view.getPivot().x, window.viewer.scene.view.getPivot().y, window.viewer.scene.view.getPivot().z]
-					}    
-				);
+				if($('#viewportChk').is(":checked")){
+					window.viewer.scene.addAnnotation(
+						markerDroppedEvent.measurement.points[0].position, 
+						{
+							title: elTitle,
+							description: annotationDescription.value || null,
+							cameraPosition: [window.viewer.scene.view.position.x, window.viewer.scene.view.position.y, window.viewer.scene.view.position.z],
+							cameraTarget: [window.viewer.scene.view.getPivot().x, window.viewer.scene.view.getPivot().y, window.viewer.scene.view.getPivot().z]
+						}    
+					);
+				} else {
+					window.viewer.scene.addAnnotation(
+						markerDroppedEvent.measurement.points[0].position, 
+						{
+							title: elTitle,
+							description: annotationDescription.value || null
+						}    
+					);
+				}
 				
 				window.viewer.scene.removeMeasurement(dummyMeasure)
 				annotationFormButton.removeEventListener('click', handleFormSubmit);
