@@ -1,4 +1,4 @@
-/build
+.DS_Store
 /test
 node_modules
 docs/.marking_your_own_pointcloud_loader.md.html
@@ -18,4 +18,3 @@ libs/CesiumUnminified
 /examples/page.html
 /resources/icons/index.html
 /examples/page.html
-.DS_Store
