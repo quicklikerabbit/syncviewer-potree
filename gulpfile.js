@@ -413,6 +413,10 @@ gulp.task("icons_viewer", function() {
   let iconsPath = "resources/icons";
 
   fs.readdir(iconsPath, function(err, items) {
+    if (err) {
+      console.error(err);
+      return;
+    }
     let svgs = items.filter(item => item.endsWith(".svg"));
     let other = items.filter(item => !item.endsWith(".svg"));
 
