@@ -946,7 +946,6 @@ initSidebar = (viewer) => {
 		$('#set_freeze').click(function(){
 			viewer.setFreeze($('#set_freeze').prop("checked"));
 		});
-
 		$('#add_annot').click(function(){
 			viewer.addAnnotationFunc();
 			$("#add_annot").prop('disabled', true);
