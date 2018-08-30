@@ -63,7 +63,6 @@
 		`);
 		
 		let sceneSG = new Potree.Scene();
-		let sceneLion = new Potree.Scene();
 		
 		viewer.setScene(sceneSG);
 
@@ -78,34 +77,6 @@
 			material.pointSizeType = Potree.PointSizeType.ADAPTIVE;
 
 			{
-				{
-					let elTitle = $(`
-						<span>
-							About Annotations
-							<img src="${Potree.resourcePath}/icons/goto.svg" 
-								name="action_set_scene"
-								class="annotation-action-icon" 
-								style="filter: invert(1);" />
-						</span>
-					`);
-					elTitle.find("img[name=action_set_scene]").click( (event) => {
-						event.stopPropagation();
-						viewer.setScene(sceneLion); 
-					});
-					elTitle.toString = () => "About Annotations";
-
-					let aAbout1 = new Potree.Annotation({
-						position: [590043.63, 231490.79, 740.78],
-						title: elTitle,
-						cameraPosition: [590105.53, 231541.63, 782.05],
-						cameraTarget: [590043.63, 231488.79, 740.78],
-						description: `<ul><li>Click on the annotation label to move a predefined view.</li> 
-						<li>Click on the icon to execute the specified action.</li>
-						In this case, the action will bring you to another scene and point cloud.</ul>`
-					});
-
-					sceneSG.annotations.add(aAbout1);
-				}
 
 				{
 					let aAbout2 = new Potree.Annotation({
@@ -199,24 +170,6 @@
 					sceneSG.annotations.add(aTrees);
 				}
 			}
-		});
-		
-		// Lion point cloud in scene 2
-		Potree.loadPointCloud("../pointclouds/lion_takanawa/cloud.js", "lion", function(e){
-			sceneLion.addPointCloud(e.pointcloud);
-			sceneLion.view.position.set(4.15, -6.12, 8.54);
-			sceneLion.view.lookAt(new THREE.Vector3(0, -0.098, 4.23));
-			e.pointcloud.material.pointSizeType = Potree.PointSizeType.ADAPTIVE;
-			
-			sceneLion.addAnnotation([0.72, -1, 8], {
-				"title": "Chinese Guardian Lion",
-				"actions": [{
-					"icon": Potree.resourcePath + "/icons/goto.svg",
-					"onclick": function(){
-						viewer.setScene(sceneSG);
-					}
-				}]
-			});
 		});
 		
 	</script>
