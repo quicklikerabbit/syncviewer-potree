@@ -1745,7 +1745,7 @@ Potree.Viewer = class PotreeViewer extends THREE.EventDispatcher {
       name: "Point"
     });
 
-    viewer.setDescription("Now click on the point cloud where \nyou would like to add the annotation");
+    viewer.setDescription("Now click on the point cloud where you would like to add the annotation");
 
     // Adding marker dropped listener
     dummyMeasure.addEventListener("marker_dropped", markerDroppedEvent => {
