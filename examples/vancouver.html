@@ -52,22 +52,18 @@
 		viewer.loadGUI(() => {
 			viewer.setLanguage('en');
 			$("#menu_scene").next().show();
+			$("#menu_classification").next().show();
 			viewer.toggleSidebar();
 		});
-		
-		let sceneSG = new Potree.Scene();
-		
-		viewer.setScene(sceneSG);
 
-		// Sorvilier point cloud in scene 1
-		Potree.loadPointCloud("../pointclouds/vol_total/cloud.js", "sigeom.sa", function(e){
-			sceneSG.addPointCloud(e.pointcloud);
-			sceneSG.view.position.set(590030, 231767, 1007);
-			sceneSG.view.lookAt(new THREE.Vector3(589844, 231376, 710));
+		Potree.loadPointCloud("https://storage.googleapis.com/syncviewer-demo/CoV_4900E_54580N.las_converted/cloud.js", "Downtown Vancouver", function(e){
+			viewer.scene.addPointCloud(e.pointcloud);
 			
 			let material = e.pointcloud.material;
 			material.size = 1;
 			material.pointSizeType = Potree.PointSizeType.ADAPTIVE;
+			material.pointColorType = Potree.PointColorType.INTENSITY
+			viewer.fitToScreen();
 		});
 		
 	</script>
