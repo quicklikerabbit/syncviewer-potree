@@ -188,7 +188,7 @@ Potree.PointCloudMaterial = class PointCloudMaterial extends THREE.RawShaderMate
 			}else{
 				return b;
 			}
-		}
+		};
 
 		let pointSize = getValid(parameters.size, 1.0);
 		let minSize = getValid(parameters.minSize, 2.0);
@@ -799,8 +799,8 @@ Potree.PointCloudMaterial = class PointCloudMaterial extends THREE.RawShaderMate
 	}
 
 	set elevationRange (value) {
-		let changed = this.uniforms.elevationRange.value[0] !== value[0]
-			|| this.uniforms.elevationRange.value[1] !== value[1];
+		let changed = this.uniforms.elevationRange.value[0] !== value[0] ||
+			this.uniforms.elevationRange.value[1] !== value[1];
 
 		if(changed){
 			this.uniforms.elevationRange.value = value;

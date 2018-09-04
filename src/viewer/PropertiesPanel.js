@@ -1141,19 +1141,19 @@ Potree.PropertiesPanel = class PropertriesPanel{
 			panel.find('#sldRGBGamma').slider({
 				value: material.rgbGamma,
 				min: 0, max: 4, step: 0.01,
-				slide: (event, ui) => {material.rgbGamma = ui.value}
+				slide: (event, ui) => { material.rgbGamma = ui.value; }
 			});
 
 			panel.find('#sldRGBContrast').slider({
 				value: material.rgbContrast,
 				min: -1, max: 1, step: 0.01,
-				slide: (event, ui) => {material.rgbContrast = ui.value}
+				slide: (event, ui) => { material.rgbContrast = ui.value; }
 			});
 
 			panel.find('#sldRGBBrightness').slider({
 				value: material.rgbBrightness,
 				min: -1, max: 1, step: 0.01,
-				slide: (event, ui) => {material.rgbBrightness = ui.value}
+				slide: (event, ui) => { material.rgbBrightness = ui.value; }
 			});
 
 			panel.find('#sldHeightRange').slider({
@@ -1180,55 +1180,55 @@ Potree.PropertiesPanel = class PropertriesPanel{
 			panel.find('#sldIntensityGamma').slider({
 				value: material.intensityGamma,
 				min: 0, max: 4, step: 0.01,
-				slide: (event, ui) => {material.intensityGamma = ui.value}
+				slide: (event, ui) => { material.intensityGamma = ui.value; }
 			});
 
 			panel.find('#sldIntensityContrast').slider({
 				value: material.intensityContrast,
 				min: -1, max: 1, step: 0.01,
-				slide: (event, ui) => {material.intensityContrast = ui.value}
+				slide: (event, ui) => { material.intensityContrast = ui.value; }
 			});
 
 			panel.find('#sldIntensityBrightness').slider({
 				value: material.intensityBrightness,
 				min: -1, max: 1, step: 0.01,
-				slide: (event, ui) => {material.intensityBrightness = ui.value}
+				slide: (event, ui) => { material.intensityBrightness = ui.value; }
 			});
 
 			panel.find('#sldWeightRGB').slider({
 				value: material.weightRGB,
 				min: 0, max: 1, step: 0.01,
-				slide: (event, ui) => {material.weightRGB = ui.value}
+				slide: (event, ui) => { material.weightRGB = ui.value; }
 			});
 
 			panel.find('#sldWeightIntensity').slider({
 				value: material.weightIntensity,
 				min: 0, max: 1, step: 0.01,
-				slide: (event, ui) => {material.weightIntensity = ui.value}
+				slide: (event, ui) => { material.weightIntensity = ui.value; }
 			});
 
 			panel.find('#sldWeightElevation').slider({
 				value: material.weightElevation,
 				min: 0, max: 1, step: 0.01,
-				slide: (event, ui) => {material.weightElevation = ui.value}
+				slide: (event, ui) => { material.weightElevation = ui.value; }
 			});
 
 			panel.find('#sldWeightClassification').slider({
 				value: material.weightClassification,
 				min: 0, max: 1, step: 0.01,
-				slide: (event, ui) => {material.weightClassification = ui.value}
+				slide: (event, ui) => { material.weightClassification = ui.value; }
 			});
 
 			panel.find('#sldWeightReturnNumber').slider({
 				value: material.weightReturnNumber,
 				min: 0, max: 1, step: 0.01,
-				slide: (event, ui) => {material.weightReturnNumber = ui.value}
+				slide: (event, ui) => { material.weightReturnNumber = ui.value; }
 			});
 
 			panel.find('#sldWeightSourceID').slider({
 				value: material.weightSourceID,
 				min: 0, max: 1, step: 0.01,
-				slide: (event, ui) => {material.weightSourceID = ui.value}
+				slide: (event, ui) => { material.weightSourceID = ui.value; }
 			});
 
 			panel.find(`#materials\\.color\\.picker`).spectrum({
@@ -1377,4 +1377,4 @@ Potree.PropertiesPanel = class PropertriesPanel{
 		this.container.append(panel.elContent);
 	}
 
-}
+};
