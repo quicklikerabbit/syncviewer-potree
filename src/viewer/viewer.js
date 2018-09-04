@@ -1745,8 +1745,11 @@ Potree.Viewer = class PotreeViewer extends THREE.EventDispatcher {
       name: "Point"
     });
 
+    viewer.setDescription("Now click on the point cloud where \nyou would like to add the annotation");
+
     // Adding marker dropped listener
     dummyMeasure.addEventListener("marker_dropped", markerDroppedEvent => {
+      viewer.setDescription("");
       const annotationFormButton = document.getElementById(
         "annotationFormSubmit"
       );
@@ -1819,7 +1822,7 @@ Potree.Viewer = class PotreeViewer extends THREE.EventDispatcher {
               },
               error: function() {
                 console.log(
-                  "We are sorry but our servers are having an issue right now"
+                  "Error saving annotation"
                 );
               }
             });
@@ -1957,7 +1960,7 @@ Potree.Viewer = class PotreeViewer extends THREE.EventDispatcher {
             },
             error: function() {
               console.log(
-                "We are sorry but our servers are having an issue right now"
+                "Error saving annotation"
               );
             }
           });
