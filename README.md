@@ -4,6 +4,8 @@
 
 This repo is a fork of [Potree Viewer](https://github.com/potree/potree) for use in [Syncviewer](https://www.syncline.ca/syncviewer/).
 
+The point cloud file used in the example ```vancouver.html``` is from the [City of Vancouver's open data project](https://data.vancouver.ca/datacatalogue/LiDAR2013InteractiveLAS.htm). 
+
 ## Build
 
 Make sure you have [node.js](http://nodejs.org/) installed
