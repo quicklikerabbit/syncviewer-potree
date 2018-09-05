@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<meta charset="utf-8">
 	<meta name="description" content="">
@@ -30,25 +31,25 @@
 	<script src="../libs/jstree/jstree.js"></script>
 	<script src="../build/potree/potree.js"></script>
 	<script src="../libs/plasio/js/laslaz.js"></script>
-	
+
 	<!-- INCLUDE ADDITIONAL DEPENDENCIES HERE -->
 	<!-- INCLUDE SETTINGS HERE -->
-	
+
 	<div class="potree_container" style="position: absolute; width: 100%; height: 100%; left: 0px; top: 0px; ">
 		<div id="potree_render_area"></div>
 		<div id="potree_sidebar_container"> </div>
 	</div>
-	
+
 	<script>
-	
+
 		window.viewer = new Potree.Viewer(document.getElementById("potree_render_area"));
-		
+
 		viewer.setEDLEnabled(true);
 		viewer.setFOV(60);
-		viewer.setPointBudget(1*1000*1000);
+		viewer.setPointBudget(1 * 1000 * 1000);
 		viewer.loadSettingsFromURL();
 		viewer.setBackground("skybox");
-		
+
 		viewer.loadGUI(() => {
 			viewer.setLanguage('en');
 			$("#menu_scene").next().show();
@@ -56,18 +57,18 @@
 			viewer.toggleSidebar();
 		});
 
-		Potree.loadPointCloud("https://storage.googleapis.com/syncviewer-demo/CoV_4900E_54580N.las_converted/cloud.js", "Downtown Vancouver", function(e){
+		Potree.loadPointCloud("https://storage.googleapis.com/syncviewer-demo/CoV_4900E_54580N.las_converted/cloud.js", "Downtown Vancouver", function (e) {
 			viewer.scene.addPointCloud(e.pointcloud);
-			
+
 			let material = e.pointcloud.material;
 			material.size = 1;
 			material.pointSizeType = Potree.PointSizeType.ADAPTIVE;
 			material.pointColorType = Potree.PointColorType.INTENSITY
 			viewer.fitToScreen();
 		});
-		
+
 	</script>
-	
+
 	<div class="modal">
 		<div class="modal-dialog">
 			<div class="modal-content">
@@ -80,13 +81,13 @@
 							<input type="text" class="form-control" placeholder="Annotation Title" id="annotationTitle">
 							<span class="form-err" id="titleErr"></span>
 						</div>
-						
+
 						<div class="form-group">
 							<label class="control-label">
 								Content
 							</label>
-							<textarea class="form-control" placeholder="Add the content of your annotation here. Click 'save' to store the annotation and the viewport you have now" id="annotationDescription" row="8"
-							></textarea>
+							<textarea class="form-control" placeholder="Add the content of your annotation here. Click 'save' to store the annotation and the viewport you have now"
+							 id="annotationDescription" row="8"></textarea>
 							<span class="form-err" id="descErr"></span>
 						</div>
 						<div class="checkbox">
@@ -101,138 +102,176 @@
 			</div>
 		</div>
 	</div>
-	
+
 
 	<style>
-	.modal-form{
-		font-family: Arial, Helvetica, sans-serif;
-	}
-	.modal {
-		position: fixed;
-		top: 0;
-		right: 0;
-		bottom: 0;
-		left: 0;
-		z-index: 1050;
-		visibility: hidden;
-		overflow: hidden;
-		outline: 0;
-    	background-color: rgba(0, 0, 0, 0.5);
-	}
-	.modal-dialog {
-		max-width: 500px;
-		margin: 1.75rem auto;
-	}
-	.modal-content {
-		position: relative;
-		display: -ms-flexbox;
-		display: flex;
-		-ms-flex-direction: column;
-		flex-direction: column;
-		width: 100%;
-		pointer-events: auto;
-		background-color: #fff;
-		background-clip: padding-box;
-		border: 1px solid rgba(0,0,0,.2);
-		border-radius: .3rem;
-		outline: 0;
-	}
-	.modal-body {
-		position: relative;
-		-ms-flex: 1 1 auto;
-		flex: 1 1 auto;
-		padding: 1rem;
-	}
+		.modal-form {
+			font-family: Arial, Helvetica, sans-serif;
+		}
 
-	.form-group {
-		margin-bottom: 15px;
-	}
-	.control-label {
-		display: inline-block;
-		max-width: 100%;
-		margin-bottom: 5px;
-		font-weight: 500;
-		color: #555;
-	}
-	.form-control {
-		display: block;
-		width: 100%;
-		height: 34px;
-		padding: 6px 12px;
-		font-size: 14px;
-		line-height: 1.42857143;
-		color: #555;
-		background-color: #fff;
-		background-image: none;
-		border: 1px solid #ccc;
-		border-radius: 4px;
-		-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
-		box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
-		-webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
-		-o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
-		transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
-	}
-	.btn {
-		display: inline-block;
-		padding: 6px 12px;
-		margin-bottom: 0;
-		font-size: 14px;
-		font-weight: 400;
-		line-height: 1.42857143;
-		text-align: center;
-		white-space: nowrap;
-		vertical-align: middle;
-		-ms-touch-action: manipulation;
-		touch-action: manipulation;
-		cursor: pointer;
-		-webkit-user-select: none;
-		-moz-user-select: none;
-		-ms-user-select: none;
-		user-select: none;
-		background-image: none;
-		border: 1px solid transparent;
-		border-radius: 4px;
-	}
-	.btn-submit {
-		color: #333;
-		background-color: rgb(185, 29, 29);
-		border-color:rgb(185, 29, 29);
-	}
-	.pull-right{float:right;}
-	.modal-form .form-control{max-width: calc(100% - 25px);}
-	.modal-form .btn-submit{color:#fff;min-width: 80px;}
-	.text-center{text-align:center;}
-	.modal-form textarea{min-height: 100px;resize: none;}
-	.form-err{
-		color:red; 
-		font-size: 12px;
-	}
+		.modal {
+			position: fixed;
+			top: 0;
+			right: 0;
+			bottom: 0;
+			left: 0;
+			z-index: 1050;
+			visibility: hidden;
+			overflow: hidden;
+			outline: 0;
+			background-color: rgba(0, 0, 0, 0.5);
+		}
 
-	.checkbox, .radio {
-		margin-bottom: 10px;
-	}
+		.modal-dialog {
+			max-width: 500px;
+			margin: 1.75rem auto;
+		}
 
-	.checkbox label, .radio label {
-		color: #555;
-    	font-size: 13px;
-	}
+		.modal-content {
+			position: relative;
+			display: -ms-flexbox;
+			display: flex;
+			-ms-flex-direction: column;
+			flex-direction: column;
+			width: 100%;
+			pointer-events: auto;
+			background-color: #fff;
+			background-clip: padding-box;
+			border: 1px solid rgba(0, 0, 0, .2);
+			border-radius: .3rem;
+			outline: 0;
+		}
 
-	button.btn-add-annot{
-		background-color: var(--bg-color-2);
-		border: var(--bg-color-2);
-		color: #fff;
-		padding: 6px 10px;
-		border-radius: 4px;
-	}
-	.mt20{margin-top:20px!important;}
-	.checkb input{vertical-align:bottom;}
-	button:focus{outline: none;}
-	.annotation-action-icon.icon-size{    
-		width: 18px;
-    	height: 18px;
-	}
+		.modal-body {
+			position: relative;
+			-ms-flex: 1 1 auto;
+			flex: 1 1 auto;
+			padding: 1rem;
+		}
 
+		.form-group {
+			margin-bottom: 15px;
+		}
+
+		.control-label {
+			display: inline-block;
+			max-width: 100%;
+			margin-bottom: 5px;
+			font-weight: 500;
+			color: #555;
+		}
+
+		.form-control {
+			display: block;
+			width: 100%;
+			height: 34px;
+			padding: 6px 12px;
+			font-size: 14px;
+			line-height: 1.42857143;
+			color: #555;
+			background-color: #fff;
+			background-image: none;
+			border: 1px solid #ccc;
+			border-radius: 4px;
+			-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+			box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+			-webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+			-o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+			transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+		}
+
+		.btn {
+			display: inline-block;
+			padding: 6px 12px;
+			margin-bottom: 0;
+			font-size: 14px;
+			font-weight: 400;
+			line-height: 1.42857143;
+			text-align: center;
+			white-space: nowrap;
+			vertical-align: middle;
+			-ms-touch-action: manipulation;
+			touch-action: manipulation;
+			cursor: pointer;
+			-webkit-user-select: none;
+			-moz-user-select: none;
+			-ms-user-select: none;
+			user-select: none;
+			background-image: none;
+			border: 1px solid transparent;
+			border-radius: 4px;
+		}
+
+		.btn-submit {
+			color: #333;
+			background-color: rgb(185, 29, 29);
+			border-color: rgb(185, 29, 29);
+		}
+
+		.pull-right {
+			float: right;
+		}
+
+		.modal-form .form-control {
+			max-width: calc(100% - 25px);
+		}
+
+		.modal-form .btn-submit {
+			color: #fff;
+			min-width: 80px;
+		}
+
+		.text-center {
+			text-align: center;
+		}
+
+		.modal-form textarea {
+			min-height: 100px;
+			resize: none;
+		}
+
+		.form-err {
+			color: red;
+			font-size: 12px;
+		}
+
+		.checkbox,
+		.radio {
+			margin-bottom: 10px;
+		}
+
+		.checkbox label,
+		.radio label {
+			color: #555;
+			font-size: 13px;
+		}
+
+		button.btn-add-annot {
+			background-color: var(--bg-color-2);
+			border: var(--bg-color-2);
+			color: #fff;
+			padding: 6px 10px;
+			border-radius: 4px;
+		}
+
+		.mt20 {
+			margin-top: 20px !important;
+		}
+
+		.checkb input {
+			vertical-align: bottom;
+		}
+
+		button:focus {
+			outline: none;
+		}
+
+		.annotation-action-icon.icon-size {
+			width: 18px;
+			height: 18px;
+		}
 	</style>
-	
-  </body>
+
+</body>
+
 </html>
