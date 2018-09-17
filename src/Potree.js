@@ -759,7 +759,7 @@ Potree.updateVisibility = function(pointclouds, camera, renderer){
 
 Potree.XHRFactory = {
 	config: {
-		withCredentials: false,
+		withCredentials: true,
 		customHeaders: [
 			{ header: null, value: null }
 		]
@@ -767,6 +767,13 @@ Potree.XHRFactory = {
 
 	createXMLHttpRequest: function () {
 		let xhr = new XMLHttpRequest();
+		const idToken = window.localStorage.getItem('idToken');
+		if (idToken) {
+			this.config.customHeaders[0] = {
+				header: 'Authorization',
+				value: `Bearer ${idToken}`
+			};
+		}
 
 		if (this.config.customHeaders &&
 			Array.isArray(this.config.customHeaders) &&
